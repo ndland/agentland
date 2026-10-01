@@ -25,9 +25,9 @@ This file governs agents that **work on AgentLand itself**. It defines how you s
 ## How to work
 
 - **Prefer small, reviewable changes.** A focused change that is easy to review is better than a large one that is hard to assess.
-- **Use deterministic verification when available.** When a test, a script, or a reproducible check can confirm a change exists, use it instead of relying on vibes. Where no deterministic check exists (as in this documentation-only phase), say so explicitly.
+- **Use deterministic verification when available.** When a test, a script, or a reproducible check can confirm a change exists, use it instead of relying on vibes. Where no deterministic check exists, say so explicitly.
 - **Make significant architectural decisions land as an ADR.** When a change is architectural in a way that should be remembered and argued about, write a new decision record in `docs/decisions/` following the structure of `0001-scope-and-boundaries.md`.
-- **Recommend before you implement in this phase.** This phase is documentation and boundary-setting. Surface recommendations and tradeoffs rather than adding tooling.
+- **Recommend before you implement when a change affects the boundary, the harness-neutral core, or the roadmap.** Surface recommendations and tradeoffs rather than adding tooling.
 
 ## Git and remote behavior
 
@@ -36,5 +36,5 @@ This file governs agents that **work on AgentLand itself**. It defines how you s
 ## Scope of this phase
 
 - Do **not** define a permanent production agent fleet.
-- Do **not** add executable tooling, dependencies, scripts, CI, model configuration, or agent/commands yet.
-- This phase is **documentation and architectural boundaries only**.
+- Do **not** add executable tooling, dependencies, scripts, CI, model configuration, or agent/commands except where the current approved roadmap slice explicitly calls for them.
+- **Implement only the currently approved roadmap slice.** Do not advance into subsequent phases without explicit human approval.

@@ -70,19 +70,44 @@ Among harnesses, **OpenCode is the first fully supported reference implementatio
 Two roles to keep separate:
 
 1. **Developing AgentLand** — the repository's own `.opencode/` configuration is used to *develop* AgentLand: it configures the harness for the work of building this repo itself. It is local to this repository and is not the product being shared.
-2. **Providing capabilities to other repositories** — future *OpenCode adapter assets* are the reusable capabilities AgentLand *provides* outward. These are the things other repositories will consume.
+2. **Providing capabilities to other repositories** — *OpenCode adapter assets* are the reusable capabilities AgentLand *provides* outward. These are the things other repositories will consume.
 
 That is a deliberate split:
 
 ```text
 .opencode/
-    = configuration used to DEVELOP AgentLand
+    = OpenCode configuration used to DEVELOP AgentLand
 
-future OpenCode adapter assets
-    = reusable capabilities AgentLand PROVIDES to other repositories
+adapters/opencode/
+    = OpenCode representations AgentLand may PROVIDE to consumers
 ```
 
 The distinction matters because it keeps the "development tooling" separate from the "distributable product." In this phase we do **not** choose a final distribution mechanism. We document the intent now so that later decisions about *how* to ship adapter assets (packaging, a tool, a config layout, a registry, etc.) are informed by this boundary rather than accidentally collapsing development config into the product.
+
+### The concrete pattern (as of Phase 1)
+
+Phase 1 demonstrates the flow for one capability end-to-end. A reusable capability is defined once, in harness-neutral form, and each harness adapter is a translation of that contract into its own representation:
+
+```text
+capabilities/
+    harness-neutral contract (purpose, inputs, responsibilities, authority, output contract)
+        ↓
+adapters/opencode/agents/...
+    OpenCode-specific representation (agent file, permissions, prompt)
+        ↓
+consumer/distribution mechanism (intentionally deferred; see ADR-0002)
+        ↓
+project specialization
+    a consuming project may override, narrow, or replace the provided agent
+```
+
+The first instance of this pattern is the generic read-only `code-reviewer` capability:
+
+- Harness-neutral contract: [`capabilities/code-reviewer.md`](../capabilities/code-reviewer.md)
+- OpenCode representation: [`adapters/opencode/agents/code-reviewer.md`](../adapters/opencode/agents/code-reviewer.md)
+
+The capability contract does not name a harness, a model, or a permission key. Everything OpenCode-specific (`mode: subagent`, `permission:`, frontmatter, tool availability) lives in the adapter side. When a project in turn consumes that agent, it is free to specialize the prompt, narrow permissions, or replace the agent entirely — the project's explicit configuration wins, and AgentLand does not silently override it (ADR-0002, decisions 5, 6, 7).
+
 
 ## Likely future conceptual areas
 

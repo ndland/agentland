@@ -112,4 +112,4 @@ The roadmap is not a commitment to a specific order of completion for later work
 
 **What we expect to learn.** Which long-term signals most reliably predict agent/model performance, supporting "measure before assigning permanent roles."
 
-**Definition of done.** Standing observability that produces the evidence used by Phases 4 and 8, and a reviewable process that promotes demotes models/agents based on it.
+**Definition of done.** Standing observability that produces the evidence used by Phases 4 and 8, and a reviewable process that promotes or demotes models/agents based on it.
